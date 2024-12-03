@@ -28,6 +28,10 @@ public class Player {
         this.diceIdList.add(diceId);
     }
 
+    public void clearDiceIdList() {
+        this.diceIdList.clear();
+    }
+
     public Player() { }
 }
 

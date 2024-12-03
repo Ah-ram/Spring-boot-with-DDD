@@ -34,6 +34,7 @@ public class GameServiceImpl implements GameService {
         List<Long> playerIdList = new ArrayList<>();
 
         for (Player player : playerList) {
+            player.clearDiceIdList();
             for (int i = 0; i < 3; i++) {
                 long randomNumber = (long)(Math.random() * 6) + 1;
                 Dice dice = new Dice(randomNumber);
