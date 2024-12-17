@@ -30,21 +30,21 @@ public class GameServiceImpl implements GameService {
 
     @Override
     public CreateSimpleGameResponse createSimpleGame() {
-        List<Player> playerList = playerRepository.findAll();
-        List<Long> playerIdList = new ArrayList<>();
+        List<Player> playerList = playerRepository.findAll();  // 모든 플레이어 정보를 조회하여 리스트로 반환
+        List<Long> playerIdList = new ArrayList<>();  // 게임에 참여한 플레이어의 ID를 저장하는 리스트
 
         for (Player player : playerList) {
-            player.clearDiceIdList();
+            player.clearDiceIdList();  // 새로운 게임 실행 시 각 플레이어의 diceIdList 초기화
             for (int i = 0; i < 3; i++) {
-                long randomNumber = (long)(Math.random() * 6) + 1;
-                Dice dice = new Dice(randomNumber);
-                Dice createdDice = diceRepository.save(dice);
+                long randomNumber = (long)(Math.random() * 6) + 1;  // Math.random()을 사용해 주사위 숫자(1~6) 랜덤 생성
+                Dice dice = new Dice(randomNumber);  // randomNumber를 받아 새로운 주사위 생성
+                Dice createdDice = diceRepository.save(dice);  // 생성된 주사위 객체 저장
 
-                player.addDiceId(createdDice.getNumber());
-                playerRepository.save(player);
+                player.addDiceId(createdDice.getNumber());  // 플레이어 객체에 생성한 주사위 번호 추가
+                playerRepository.save(player);  // 업데이트된 플레이어 저장
             }
 
-            playerIdList.add((long)player.getId());
+            playerIdList.add((long)player.getId());  // 플레이어의 ID를 playerIdList에 추가
         }
 
         CreateSimpleGameRequest createSimpleGameRequest = new CreateSimpleGameRequest(playerIdList);
@@ -78,11 +78,13 @@ public class GameServiceImpl implements GameService {
 
     private int calculateDiceSum(Player player) {
         return player.getDiceIdList().stream().mapToInt(Long::intValue).sum();
-    }
+    }   // 플레이어 객체의 diceIdList를 stream으로 변환
+        // Long 타입을 int로 변환하여 합산
 
     @Override
     public RecordGameWinnerResponse recordGameWinner(RecordGameWinnerRequest gameCheckWinnerRequest) {
         Optional<Game> maybeGame = gameRepository.findById(gameCheckWinnerRequest.getGameId());
+        // Optional은 값이 있을수도 없을수도 있는 객체를 제어
 
         if (maybeGame.isEmpty()) {
             return RecordGameWinnerResponse.gameNotFound();

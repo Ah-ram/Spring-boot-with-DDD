@@ -1,28 +1,32 @@
-package practice.second.player.service;
+package com.example2.demo.player.service;
 
+import com.example2.demo.dice.entity.Dice;
+import com.example2.demo.dice.repository.DiceRepository;
+import com.example2.demo.player.controller.response_form.PlayerCreateResponseForm;
+import com.example2.demo.player.entity.Player;
+import com.example2.demo.player.repository.PlayerRepository;
+import com.example2.demo.player.service.request.PlayerCreateRequest;
+import com.example2.demo.player.service.request.PlayerFindRequest;
+import com.example2.demo.player.service.response.PlayerCreateResponse;
+import com.example2.demo.player.service.response.PlayerListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import practice.second.dice.repository.DiceRepository;
-import practice.second.player.entity.Player;
-import practice.second.player.repository.PlayerRepository;
-import practice.second.player.service.request.PlayerCreateRequest;
-import practice.second.player.service.request.PlayerFindRequest;
-import practice.second.player.service.response.PlayerCreateResponse;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class PlayerServiceImpl implements PlayerService{
+public class PlayerServiceImpl implements PlayerService {
     final private PlayerRepository playerRepository;
     final private DiceRepository diceRepository;
 
     @Override
     public PlayerCreateResponse createPlayer(PlayerCreateRequest playerCreateRequest) {
-        Player player = playerCreateRequest.toPlayer(); // 요청을 playerCreateRequest 객체로 받고, 이를 변환하여 player 엔ㅌ
+        Player player = playerCreateRequest.toPlayer();
         Player createdPlayer = playerRepository.save(player);
 
         return PlayerCreateResponse.from(createdPlayer);
@@ -42,6 +46,7 @@ public class PlayerServiceImpl implements PlayerService{
     @Override
     public List<Player> listPlayer() {
         List<Player> playerList = playerRepository.findAll();
+
         return playerList;
     }
 }

@@ -1,16 +1,20 @@
-package practice.second.dice.entity;
+package com.example2.demo.dice.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Generated;
 import lombok.Getter;
 
+// Entity 내부에 상태 값을 배치
+// 이 상태 값을 획득하고 싶을 경우 사용하는 것이 Getter
+// @Getter를 사용하여 getNumber() 메서드(함수)가 자동으로 생성됨
 @Getter
 @Entity
 public class Dice {
-    @Id   // pk값 지정
-    @GeneratedValue(strategy = GenerationType.IDENTITY)   // 기본 키 값이 DB에서 자동생성(Auto_increment)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private Long id;
 
     private Long number;
@@ -20,5 +24,5 @@ public class Dice {
         this.number = number;
     }
 
-    public Dice() {}   // JPA는 기본 생성자가 필요함
+    public Dice() {}
 }

@@ -1,31 +1,29 @@
-package practice.second.player.controller;
+package com.example2.demo.player.controller;
 
-
+import com.example2.demo.player.controller.request_form.PlayerCreateRequestForm;
+import com.example2.demo.player.controller.request_form.PlayerFindRequestForm;
+import com.example2.demo.player.controller.response_form.PlayerCreateResponseForm;
+import com.example2.demo.player.controller.response_form.PlayerListResponseForm;
+import com.example2.demo.player.entity.Player;
+import com.example2.demo.player.service.response.PlayerCreateResponse;
+import com.example2.demo.player.service.response.PlayerListResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import practice.second.player.controller.request_form.PlayerCreateRequestForm;
-import practice.second.player.controller.response_form.PlayerCreateResponseForm;
-import practice.second.player.controller.request_form.PlayerFindRequestForm;
-import practice.second.player.service.response.PlayerCreateResponse;
-import practice.second.player.service.PlayerService;
-import practice.second.player.entity.Player;
+import org.springframework.web.bind.annotation.*;
+
+import com.example2.demo.player.service.PlayerService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/second-player")
+@RequestMapping("/player")
 public class PlayerController {
     final private PlayerService playerService;
 
     @GetMapping("/create")
-    // @ModelAttribute는 요청 데이터를 객체로 바인딩하는데 사용
-    // 클라이언트로부터 전달된 요청 파라미터나 데이터 자동 매핑
     public PlayerCreateResponseForm createPlayer(@ModelAttribute PlayerCreateRequestForm playerCreateRequestForm) {
         log.info("createPlayer() called!");
 
